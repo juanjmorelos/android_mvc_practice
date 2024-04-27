@@ -1,0 +1,18 @@
+<resources>
+    <string name="app_name">empleados</string>
+    <string name="text_title_dashboard">Control de empleados</string>
+    <string name="text_subtitle">Último ingreso: %s</string>
+    <string name="text_view_position">Ver empleados</string>
+    <string name="text_add_position">Añadir cargo</string>
+    <string name="text_add_employee">Añadir empleado</string>
+
+    <string name="text_fragment_name">%s</string>
+    <string name="text_btn_add_position">Agregar posición</string>
+    <string name="text_label_name_position">Nombre del cargo</string>
+    <string name="text_employee_name">Nombre del empleado</string>
+    <string name="text_employee_lastName">Apellido de empleado</string>
+    <string name="text_employee_position">Cargo del empleado</string>
+    <string name="text_btn_add_employee">Agregar empleado</string>
+    <string name="text_item_employee_complete_name">%s %s</string>
+    <string name="text_item_employee_position">%s</string>
+</resources>
