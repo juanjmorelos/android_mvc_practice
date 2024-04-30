@@ -6,12 +6,17 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import com.uniminuto.empleados.R;
 import com.uniminuto.empleados.controllers.EmployeeRecyclerAdapter;
+import com.uniminuto.empleados.controllers.FirebaseDatabaseController;
+import com.uniminuto.empleados.controllers.ProgressDialog;
+import com.uniminuto.empleados.models.FirebaseReponseListener;
 import com.uniminuto.empleados.models.UserModel;
 
 import java.util.ArrayList;
@@ -20,6 +25,9 @@ public class ViewEmployeesFragment extends Fragment {
     ArrayList<UserModel> employeeArraylist;
     EmployeeRecyclerAdapter adapter;
     RecyclerView recycler;
+    ProgressDialog pd;
+    FirebaseDatabaseController firebaseDatabaseController;
+    TextView emptyText;
 
     public static ViewEmployeesFragment newInstance(String param1, String param2) {
         ViewEmployeesFragment fragment = new ViewEmployeesFragment();
@@ -46,21 +54,30 @@ public class ViewEmployeesFragment extends Fragment {
         employeeArraylist = new ArrayList<>();
         adapter = new EmployeeRecyclerAdapter(employeeArraylist, getActivity());
         recycler = view.findViewById(R.id.recyclerViewUserList);
+        firebaseDatabaseController = new FirebaseDatabaseController();
+        pd = new ProgressDialog();
+        emptyText = view.findViewById(R.id.textEmployeeEmpty);
 
         recycler.setAdapter(adapter);
         recycler.setLayoutManager(new LinearLayoutManager(getActivity()));
     }
 
     private void setupUsersData() {
-        employeeArraylist.add(new UserModel("Maria", "Perez", "Administrador de empresas"));
-        employeeArraylist.add(new UserModel("Claudia", "Sanchez", "Administrador de empresas"));
-        employeeArraylist.add(new UserModel("Juan", "García", "Contador"));
-        employeeArraylist.add(new UserModel("Ana", "López", "Marketing"));
-        employeeArraylist.add(new UserModel("Carlos", "Martínez", "Diseñador"));
-        employeeArraylist.add(new UserModel("Laura", "Rodríguez", "Contador"));
-        employeeArraylist.add(new UserModel("Pedro", "Hernández", "Marketing"));
-        employeeArraylist.add(new UserModel("Sofía", "Díaz", "Diseñador"));
-        employeeArraylist.add(new UserModel("Luis", "Gómez", "Administrador de empresas"));
+        pd.showProgressDialog(getActivity());
+        firebaseDatabaseController.fetchEmployeeData(new FirebaseReponseListener<UserModel>() {
+            @Override
+            public void onDataReceived(ArrayList<UserModel> data) {
+                pd.hideProgressDialog();
+                employeeArraylist = data;
+                adapter.updateData(employeeArraylist);
+                showEmptyMessage(employeeArraylist.isEmpty());
+            }
+
+            @Override
+            public void onCancelled(Exception error) {
+
+            }
+        });
     }
 
     public void filterEmployees(String filtro) {
@@ -70,12 +87,32 @@ public class ViewEmployeesFragment extends Fragment {
                 filteredList.add(employee);
             }
         }
-
-        // Actualiza el RecyclerView con la lista filtrada
         adapter.updateData(filteredList);
+        showEmptyMessage(filteredList.isEmpty(), "No se encontraron empleados registrados con el cargo: " + filtro.toLowerCase());
     }
 
     public void cleanFilter() {
         adapter.updateData(employeeArraylist);
+        showEmptyMessage(employeeArraylist.isEmpty());
+    }
+
+    private void showEmptyMessage(boolean show, String message) {
+        if(show) {
+            recycler.setVisibility(View.GONE);
+            emptyText.setVisibility(View.VISIBLE);
+            emptyText.setText(message);
+            return;
+        }
+        recycler.setVisibility(View.VISIBLE);
+        emptyText.setVisibility(View.GONE);
+    }
+    private void showEmptyMessage(boolean show) {
+        if(show) {
+            recycler.setVisibility(View.GONE);
+            emptyText.setVisibility(View.VISIBLE);
+            return;
+        }
+        recycler.setVisibility(View.VISIBLE);
+        emptyText.setVisibility(View.GONE);
     }
 }
