@@ -12,5 +12,5 @@ El siguiente proyecto tiene como finalidad realizar un modelado de un proyecto u
    ```
    git clone https://github.com/juanjmorelos/android_mvc_practice.git
    ```
-2. Sitúese en la rama `main_backend`
+2. Asegurese de estar situado en la rama `main_backend`
 3. Abra utilizando el IDE [Android Studio](https://developer.android.com/studio?gad_source=1&gclid=CjwKCAjwoa2xBhACEiwA1sb1BKFZOktSS14nH99euUKyVOLIfni2dtikX_M62uHAsYd8ThCnOqWHuBoCjOQQAvD_BwE&gclsrc=aw.ds&hl=es-419) y ejecute.
