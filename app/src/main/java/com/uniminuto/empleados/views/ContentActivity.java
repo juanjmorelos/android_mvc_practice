@@ -18,7 +18,10 @@ import androidx.fragment.app.Fragment;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.android.material.snackbar.Snackbar;
 import com.uniminuto.empleados.R;
+import com.uniminuto.empleados.controllers.FirebaseDatabaseController;
+import com.uniminuto.empleados.controllers.ProgressDialog;
 import com.uniminuto.empleados.controllers.Utils;
+import com.uniminuto.empleados.models.FirebaseReponseListener;
 import com.uniminuto.empleados.models.FragmentsController;
 import com.uniminuto.empleados.models.PositionModel;
 import com.uniminuto.empleados.views.fragments.AddEmployeeFragment;
@@ -34,6 +37,7 @@ public class ContentActivity extends AppCompatActivity {
     ImageView filter;
     ViewEmployeesFragment viewEmployeesFragment;
     boolean isFiltered;
+    ProgressDialog pd;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,6 +47,7 @@ public class ContentActivity extends AppCompatActivity {
         backButton = findViewById(R.id.backButton);
         tvTitle = findViewById(R.id.textTitle);
         filter = findViewById(R.id.filter);
+        pd = new ProgressDialog();
 
         String title = getTitleByFragment(fragmentsController);
         String formatTitle = String.format(getString(R.string.text_fragment_name), title);
@@ -147,13 +152,21 @@ public class ContentActivity extends AppCompatActivity {
     }
 
     private void setupPositionData(AutoCompleteTextView employeePosition) {
-        ArrayList<PositionModel> positionArray = new ArrayList<>();
-        positionArray.add(new PositionModel("1", "Administrador de empresas"));
-        positionArray.add(new PositionModel("2", "Contador"));
-        positionArray.add(new PositionModel("3", "Diseñador"));
-        positionArray.add(new PositionModel("4", "Marketing"));
-        ArrayAdapter<PositionModel> adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, positionArray);
-        employeePosition.setAdapter(adapter);
+        FirebaseDatabaseController databaseController = new FirebaseDatabaseController();
+        pd.showProgressDialog(this);
+        databaseController.getRegisterPosition(new FirebaseReponseListener<PositionModel>() {
+            @Override
+            public void onDataReceived(ArrayList<PositionModel> data) {
+                pd.hideProgressDialog();
+                ArrayAdapter<PositionModel> adapter = new ArrayAdapter<>(ContentActivity.this, android.R.layout.simple_list_item_1, data);
+                employeePosition.setAdapter(adapter);
+            }
+
+            @Override
+            public void onCancelled(Exception error) {
+                pd.hideProgressDialog();
+            }
+        });
     }
 
     private void showDialogWhenIsFiltered(View v) {

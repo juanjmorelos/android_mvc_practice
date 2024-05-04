@@ -15,4 +15,6 @@
     <string name="text_btn_add_employee">Agregar empleado</string>
     <string name="text_item_employee_complete_name">%s %s</string>
     <string name="text_item_employee_position">%s</string>
+    <string name="text_progress">Cargando por favor espere...</string>
+    <string name="text_employee_empty">No hay empleados registrados</string>
 </resources>

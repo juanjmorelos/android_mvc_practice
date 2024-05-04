@@ -6,9 +6,8 @@ public class PositionModel {
     String positionId;
     String positionName;
 
-    public PositionModel(String positionId, String positionName) {
-        this.positionId = positionId;
-        this.positionName = positionName;
+    public PositionModel() {
+
     }
 
     public String getPositionId() {

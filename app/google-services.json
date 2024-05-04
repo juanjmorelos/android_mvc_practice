@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "158706297492",
+    "project_id": "fir-databaseproyect",
+    "storage_bucket": "fir-databaseproyect.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:158706297492:android:56df5aaf3a0775cb6da281",
+        "android_client_info": {
+          "package_name": "com.uniminuto.empleados"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBeKP-JVk7x4odzfqdF3Atf5xXb8zwPSgM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

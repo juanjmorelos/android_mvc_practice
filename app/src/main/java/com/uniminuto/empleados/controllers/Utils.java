@@ -1,8 +1,10 @@
 package com.uniminuto.empleados.controllers;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 
+import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.uniminuto.empleados.models.FragmentsController;
 import com.uniminuto.empleados.views.ContentActivity;
 
@@ -24,5 +26,12 @@ public class Utils {
                 return FragmentsController.VIEW_EMPLOYEES;
         }
         return FragmentsController.VIEW_EMPLOYEES;
+    }
+
+    public static void showMessageInfo(String message, Context context) {
+        MaterialAlertDialogBuilder alert = new MaterialAlertDialogBuilder(context);
+        alert.setMessage(message);
+        alert.setPositiveButton("Aceptar", null);
+        alert.show();
     }
 }

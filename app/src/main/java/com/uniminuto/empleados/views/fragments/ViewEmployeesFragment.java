@@ -97,7 +97,7 @@ public class ViewEmployeesFragment extends Fragment {
     }
 
     private void showEmptyMessage(boolean show, String message) {
-        if(show){
+        if(show) {
             recycler.setVisibility(View.GONE);
             emptyText.setVisibility(View.VISIBLE);
             emptyText.setText(message);

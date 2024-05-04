@@ -5,10 +5,8 @@ public class UserModel {
     String lastName;
     String position;
 
-    public UserModel(String name, String lastName, String position) {
-        this.name = name;
-        this.lastName = lastName;
-        this.position = position;
+    public UserModel() {
+
     }
 
     public String getName() {
